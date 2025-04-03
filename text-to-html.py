@@ -214,6 +214,91 @@ def replace_figures(content: str) -> str:
     pattern = r'\\begin\{figure\}(.*?)\\end\{figure\}'
     return re.sub(pattern, figure_replacement, content, flags=re.DOTALL)
 
+def replace_tables(content: str) -> str:
+    """
+    Converte ambientes table para HTML.
+    Extrai o ambiente tabular, remove comandos desnecessários
+    (como \centering, \caption e \label) que não fazem parte do conteúdo
+    da tabela, processa suas linhas e células, adiciona legenda e label,
+    e gera uma tabela HTML.
+    """
+    def table_replacement(match: re.Match) -> str:
+        table_block = match.group(1)
+        
+        # Remove \centering para evitar que apareça na tabela
+        table_block = re.sub(r'\\centering\s*', '', table_block)
+        
+        # Captura a legenda e processa os comandos de formatação nela
+        caption_match = re.search(r'\\caption\s*\{(.*?)\}', table_block, re.DOTALL)
+        caption = caption_match.group(1).strip() if caption_match else ""
+        caption = replace_formatting_commands(caption) if caption else caption
+        
+        # Captura o label
+        label_match = re.search(r'\\label\s*\{(.*?)\}', table_block)
+        label = label_match.group(1).strip() if label_match else ""
+        
+        # Remove os comandos de caption e label do bloco
+        table_block = re.sub(r'\\caption\s*\{.*?\}', '', table_block, flags=re.DOTALL)
+        table_block = re.sub(r'\\label\s*\{.*?\}', '', table_block)
+
+        # Agora, captura somente o conteúdo após a especificação de colunas
+        # Exemplo: \begin{tabular}{|p{9cm}|} ... \end{tabular}
+        tabular_pattern = r'\\begin\{tabular\}\{[^\}]*\}(?P<tabular_content>.*?)\\end\{tabular\}'
+        tabular_match = re.search(tabular_pattern, table_block, re.DOTALL)
+        if not tabular_match:
+            # Se não achar um ambiente tabular, não gera nada
+            return ""
+        
+        # Pega somente o que interessa, sem a parte {|p{9cm}|}
+        tabular_content = tabular_match.group("tabular_content")
+        
+        # Remove \hline e quebras de linha indesejadas
+        tabular_content = re.sub(r'\\hline', '', tabular_content)
+        
+        # Divide em linhas pela quebra de linha '\\'
+        rows = re.split(r'\\\\', tabular_content)
+        
+        table_body = '<tbody>'
+        for row in rows:
+            row = row.strip()
+            if not row:
+                continue
+            # Separa as células e remove espaços em branco
+            cells = [cell.strip() for cell in row.split('&')]
+            table_body += '<tr>' + ''.join(f'<td>{cell}</td>' for cell in cells) + '</tr>'
+        table_body += '</tbody>'
+        
+        # Monta o HTML da tabela
+        table_html = f'<table class="tabela">{table_body}</table>'
+        
+        # Se existir label, registra e insere o id na tabela
+        if label:
+            if label not in ref_labels:
+                ref_labels[label] = {
+                    'type': 'Tabela',
+                    'command': 'tabela',
+                    'counter': refs_counter['Tabela'],
+                    'text': f"Tabela {refs_counter['Tabela']}"
+                }
+                refs_counter['Tabela'] += 1
+            counter = ref_labels[label]["counter"]
+            table_html = table_html.replace('<table ', f'<table id="tabela-{counter}" ', 1)
+            html = (
+                '<div class="container">\n'
+                f'{table_html}\n'
+                f'<label class="legenda">{ref_labels[label]["type"]} {counter}'
+            )
+            if caption:
+                html += f' - {caption}'
+            html += '.</label></div>'
+        else:
+            html = table_html
+        return html
+
+    pattern = r'\\begin\{table\}(.*?)\\end\{table\}'
+    return re.sub(pattern, table_replacement, content, flags=re.DOTALL)
+
+
 def replace_sections(content: str, chapter_number: int) -> str:
     """
     Converte os comandos \section e \subsection para tags HTML numeradas.
@@ -263,10 +348,13 @@ def replace_formatting_commands(text: str) -> str:
         'emph': ('<i class="italico">', '</i>'),
         'textit': ('<i class="italico">', '</i>'),
         'texttt': ('<code class="codigo">', '</code>'),
+        'footnote': (' (', ')'),
     }
     i = 0
     result = ""
     while i < len(text):
+        if ((i == 0 or i == len(text)) and text[i] == " "):
+            i += 1
         if text[i] == '\\':
             found = False
             for cmd, (open_tag, close_tag) in commands.items():
@@ -382,6 +470,7 @@ def convert_latex_to_html(file_path: str, chapter_number: int) -> None:
     content = replace_formatting(content, chapter_number)
     content = replace_lists_and_paragraphs(content)
     content = replace_quotes(content)
+    content = replace_tables(content)
 
     html_content = build_html(content, chapter_title, chapter_number)
 
