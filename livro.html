@@ -1,0 +1,291 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual Web Moderna</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7f5;
+      color: #1f2933;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0b3d2e, #16844a);
+      color: white;
+      padding: 70px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      max-width: 1000px;
+      margin: 0 auto 20px;
+      font-size: 2.7rem;
+      line-height: 1.2;
+    }
+
+    header p {
+      max-width: 850px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      line-height: 1.7;
+    }
+
+    .buttons {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: white;
+      color: #0b3d2e;
+    }
+
+    .btn-primary:hover {
+      background: #e6f4ec;
+    }
+
+    .btn-secondary {
+      background: #0b3d2e;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+      background: #146c43;
+    }
+
+    section {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 55px 20px;
+    }
+
+    .info {
+      background: white;
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      line-height: 1.7;
+    }
+
+    .info h2,
+    .chapters h2 {
+      color: #0b3d2e;
+      font-size: 2rem;
+      margin-top: 0;
+    }
+
+    .book-data {
+      margin-top: 25px;
+      background: #eef8f1;
+      border-left: 5px solid #16844a;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+      margin-top: 30px;
+    }
+
+    .chapter-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+      border-top: 5px solid #16844a;
+    }
+
+    .chapter-card h3 {
+      margin-top: 0;
+      color: #0b3d2e;
+      font-size: 1.15rem;
+    }
+
+    .chapter-card p {
+      line-height: 1.6;
+      color: #4b5563;
+      font-size: 0.96rem;
+    }
+
+    footer {
+      background: #0b3d2e;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+
+      .info {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Manual Introdutório e Prático do Desenvolvedor para a Web Moderna</h1>
+
+    <p>
+      Um livro gratuito voltado para estudantes, professores e desenvolvedores
+      que desejam aprender os principais fundamentos, tecnologias e práticas
+      do desenvolvimento web moderno.
+    </p>
+
+    <div class="buttons">
+      <a class="btn btn-primary" href="livro.html">Ler livro online</a>
+      <a class="btn btn-secondary" href="livro.pdf" download>Baixar PDF do livro</a>
+    </div>
+  </header>
+
+  <section>
+    <div class="info">
+      <h2>Sobre a obra</h2>
+
+      <p>
+        O <strong>Manual Introdutório e Prático do Desenvolvedor para a Web Moderna</strong>
+        apresenta uma jornada de aprendizagem que começa nos fundamentos da criação
+        de páginas web e avança para temas essenciais do desenvolvimento moderno,
+        como JavaScript, TypeScript, APIs, frameworks, banco de dados, testes,
+        DevOps, arquitetura de software e Web Semântica.
+      </p>
+
+      <p>
+        A obra foi organizada com uma linguagem acessível e abordagem prática,
+        buscando apoiar leitores iniciantes e também aqueles que desejam consolidar
+        conhecimentos importantes para o desenvolvimento de aplicações web.
+      </p>
+
+      <div class="book-data">
+        <p><strong>Autor:</strong> Fischer Jônatas Ferreira</p>
+        <p><strong>Editora:</strong> VirtualBooks Editora</p>
+        <p><strong>Publicação:</strong> 2026</p>
+        <p><strong>ISBN:</strong> 978-85-434-1982-4</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapters">
+    <h2>Conteúdo do livro</h2>
+
+    <div class="chapters-grid">
+
+      <div class="chapter-card">
+        <h3>HTML e CSS</h3>
+        <p>Apresenta as bases da construção de páginas web, abordando HTML semântico, elementos, atributos e estilização com CSS.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>JavaScript e TypeScript</h3>
+        <p>Introduz o desenvolvimento dinâmico de aplicações web com JavaScript e mostra como o TypeScript contribui para projetos mais robustos.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Fundamentos da Internet</h3>
+        <p>Explica conceitos como arquitetura de rede, protocolos de comunicação, TCP/IP, HTTP e a diferença entre Internet e Web.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Ruby on Rails, Laravel e Django</h3>
+        <p>Apresenta três frameworks utilizados no desenvolvimento web, com exemplos práticos e comparação entre as tecnologias.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Banco de Dados para Web</h3>
+        <p>Discute bancos relacionais e não relacionais, critérios de escolha e práticas de armazenamento e manipulação de dados.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Back-end de Aplicações Web</h3>
+        <p>Explora a lógica do lado do servidor e apresenta tecnologias como Node.js, Django DRF e ASP.NET.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>APIs</h3>
+        <p>Aborda REST, GraphQL, gRPC, métodos HTTP, endpoints e formatos de dados utilizados na comunicação entre sistemas.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Front-end: React.js e Angular</h3>
+        <p>Apresenta conceitos de interfaces dinâmicas, renderização, componentes e frameworks modernos para front-end.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Engenharia de Requisitos</h3>
+        <p>Trata da organização, validação e compreensão dos requisitos necessários para o desenvolvimento de aplicações web.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Web Semântica</h3>
+        <p>Apresenta metadados, ontologias, agentes inteligentes, Linked Data, RDF, OWL, SPARQL e JSON-LD.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Testes de Software para Web</h3>
+        <p>Explora estratégias de validação e automação de testes com ferramentas como Selenium e Cypress.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>DevOps</h3>
+        <p>Introduz integração contínua, entrega contínua, automação, colaboração entre equipes e pipelines CI/CD.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Arquitetura de Software</h3>
+        <p>Discute arquiteturas monolítica, cliente-servidor, orientada a mensagens e publicador-consumidor.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Ferramentas para Web</h3>
+        <p>Apresenta ferramentas de versionamento, colaboração, hospedagem, implantação e organização de projetos web.</p>
+      </div>
+
+      <div class="chapter-card">
+        <h3>Hard Skills do Desenvolvedor Web</h3>
+        <p>Reúne as principais competências técnicas necessárias para quem deseja iniciar ou fortalecer sua atuação profissional na área.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Manual Introdutório e Prático do Desenvolvedor para a Web Moderna</strong></p>
+    <p>© 2026 Fischer Jônatas Ferreira. Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>
+```
